@@ -287,55 +287,56 @@ def generate_part4_verify():
         ("Copyright (C) Microsoft Corporation. All rights reserved.", "comment"),
         ("", "default"),
         ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\04-lab\\mcp-client>", "prompt"),
-        ("python verify_setup.py", "command"),
+        ("uv run python verify_setup.py", "command"),
         ("", "default"),
-        ("INFO:weather_agent.agent: Initializing weather agent with remote MCP server", "comment"),
-        ("INFO:weather_agent.agent: MCP Server: http://localhost:8085/mcp", "comment"),
-        ("INFO:weather_agent.agent: Connecting to MCP server...", "comment"),
-        ("INFO:weather_agent.agent: MCP toolset created successfully", "comment"),
-        ("INFO:weather_agent.agent: Weather agent initialized with remote MCP tools:", "comment"),
-        ("INFO:weather_agent.agent:    - get_current_weather(city)", "comment"),
-        ("INFO:weather_agent.agent:    - get_forecast(city, days)", "comment"),
-        ("INFO:weather_agent.agent:    - health_check()", "comment"),
-        ("INFO:weather_agent.agent: Remote MCP connection successful!", "success"),
+        ("INFO:weather_agent.agent:Initializing weather agent with remote MCP server", "comment"),
+        ("INFO:weather_agent.agent:MCP Server: http://localhost:8085/mcp", "comment"),
+        ("INFO:weather_agent.agent:Connecting to MCP server...", "comment"),
+        ("INFO:weather_agent.agent:MCP toolset created successfully", "comment"),
+        ("INFO:weather_agent.agent:Weather agent initialized with remote MCP tools:", "comment"),
+        ("INFO:weather_agent.agent:   - get_current_weather(city)", "comment"),
+        ("INFO:weather_agent.agent:   - get_forecast(city, days)", "comment"),
+        ("INFO:weather_agent.agent:   - health_check()", "comment"),
+        ("INFO:weather_agent.agent:Remote MCP connection successful!", "success"),
         ("============================================================", "highlight"),
         ("Weather Agent Setup Verification", "highlight"),
         ("============================================================", "highlight"),
         ("", "default"),
-        ("[+] Checking environment configuration...", "prompt"),
-        (" [OK] GOOGLE_API_KEY configured (AQ.Ab8RN6J...)", "success"),
+        ("Checking environment configuration...", "prompt"),
+        ("[OK] GOOGLE_API_KEY configured (AQ.Ab8RN6J...)", "success"),
         ("", "default"),
-        ("[+] Checking dependencies...", "prompt"),
-        (" [OK] Google ADK", "success"),
-        (" [OK] Google Generative AI", "success"),
-        (" [OK] MCP", "success"),
-        (" [OK] FastMCP", "success"),
-        (" [OK] python-dotenv", "success"),
-        (" [OK] httpx", "success"),
+        ("Checking dependencies...", "prompt"),
+        ("[OK] Google ADK", "success"),
+        ("[OK] Google Generative AI", "success"),
+        ("[OK] MCP", "success"),
+        ("[OK] FastMCP", "success"),
+        ("[OK] python-dotenv", "success"),
+        ("[OK] httpx", "success"),
         ("", "default"),
-        ("[+] Checking agent structure...", "prompt"),
-        (" [OK] weather_agent/agent.py", "success"),
-        (" [OK] weather_agent/__init__.py", "success"),
+        ("Checking agent structure...", "prompt"),
+        ("[OK] weather_agent/agent.py", "success"),
+        ("[OK] weather_agent/__init__.py", "success"),
         ("", "default"),
-        ("[+] Checking MCP server connectivity...", "prompt"),
-        (" [OK] MCP server reachable at http://localhost:8085/mcp (HTTP 400/Session)", "success"),
+        ("Checking MCP server connectivity...", "prompt"),
+        ("[OK] MCP server reachable at http://localhost:8085/mcp (HTTP 400)", "success"),
         ("", "default"),
-        ("[+] Checking agent import...", "prompt"),
-        (" [OK] Agent imported successfully: weather_agent", "success"),
-        ("      Model: gemini-3.5-flash-lite", "highlight"),
+        ("Checking agent import...", "prompt"),
+        ("[OK] Agent imported successfully: weather_agent", "success"),
+        ("   Model: gemini-3.5-flash-lite", "highlight"),
         ("", "default"),
         ("============================================================", "highlight"),
-        (" [ALL CHECKS PASSED] System is fully verified and ready!", "success"),
-        ("============================================================", "highlight"),
-        ("Ready to start web UI: Run 'adk web' -> Open http://localhost:8000", "app"),
+        ("[OK] All checks passed!", "success"),
+        ("", "default"),
+        ("Ready to start!", "prompt"),
+        ("   Run: uv run adk web", "command"),
+        ("", "default"),
+        ("Then open: http://localhost:8000", "app"),
     ]
     img = create_windows_terminal("PowerShell - 04-lab: verify_setup.py", lines, width=980)
     img.save(SCREENSHOTS_DIR / "04-verify-setup.png")
     print("Generated 04-verify-setup.png (Windows style)")
 
-def generate_part4_browser():
-    width = 1100
-    height = 720
+def draw_adk_browser_frame(width, height):
     img = Image.new("RGB", (width, height), (245, 247, 250))
     draw = ImageDraw.Draw(img)
 
@@ -343,15 +344,14 @@ def generate_part4_browser():
     font_title = get_font(FONT_SEGOE_PATH, 13)
     font_ui = get_font(FONT_SEGOE_PATH, 14)
     font_bold = get_font(FONT_SEGOE_BOLD, 14)
-    font_chat = get_font(FONT_SEGOE_PATH, 15)
     font_code = get_font(FONT_CONSOLAS_PATH, 13)
 
     # 1. Windows Chrome Titlebar & Window controls
     draw.rectangle([0, 0, width, 40], fill=(230, 233, 238))
     
     # Active tab in Chrome
-    draw.rounded_rectangle([10, 8, 260, 40], radius=8, fill=(255, 255, 255))
-    draw.text((32, 16), "Google ADK - Weather Agent", fill=(50, 50, 50), font=font_tab)
+    draw.rounded_rectangle([10, 8, 270, 40], radius=8, fill=(255, 255, 255))
+    draw.text((32, 16), "Google ADK Dev UI - weather_agent", fill=(50, 50, 50), font=font_tab)
 
     # Windows Control Buttons (top right)
     btn_w = 46
@@ -367,7 +367,7 @@ def generate_part4_browser():
     draw.rectangle([0, 40, width, 82], fill=(255, 255, 255))
     draw.line([(0, 82), (width, 82)], fill=(220, 224, 230), width=1)
     draw.rounded_rectangle([80, 47, width - 80, 75], radius=6, fill=(241, 243, 245))
-    draw.text((105, 53), "http://localhost:8000/dev-ui/  (active: weather_agent)", fill=(80, 80, 80), font=font_title)
+    draw.text((105, 53), "http://localhost:8000/dev-ui/  (Selected App: weather_agent)", fill=(80, 80, 80), font=font_title)
 
     # 3. Sidebar (Left panel)
     sidebar_w = 280
@@ -377,74 +377,140 @@ def generate_part4_browser():
     draw.text((20, 105), "AGENT PLATFORM", fill=(120, 125, 135), font=font_bold)
     
     # Agent Card
-    draw.rounded_rectangle([16, 135, sidebar_w - 16, 215], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
-    draw.text((28, 148), "weather_agent", fill=(26, 115, 232), font=font_bold)
+    draw.rounded_rectangle([16, 135, sidebar_w - 16, 220], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
+    draw.text((28, 146), "weather_agent", fill=(26, 115, 232), font=font_bold)
     draw.text((28, 170), "Model: gemini-3.5-flash-lite", fill=(90, 95, 105), font=font_ui)
-    draw.text((28, 190), "[ONLINE] Status: Active", fill=(46, 160, 67), font=font_ui)
+    draw.text((28, 192), "[ONLINE] Status: Active", fill=(46, 160, 67), font=font_ui)
 
     # Remote MCP Info
-    draw.text((20, 235), "REMOTE MCP TOOLS", fill=(120, 125, 135), font=font_bold)
-    draw.rounded_rectangle([16, 260, sidebar_w - 16, 385], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
-    draw.text((28, 272), "Endpoint: localhost:8085/mcp", fill=(60, 64, 67), font=font_code)
-    draw.text((28, 298), "+ get_current_weather(city)", fill=(30, 142, 62), font=font_code)
-    draw.text((28, 323), "+ get_forecast(city, days)", fill=(30, 142, 62), font=font_code)
-    draw.text((28, 348), "+ health_check()", fill=(30, 142, 62), font=font_code)
+    draw.text((20, 240), "REMOTE MCP TOOLS", fill=(120, 125, 135), font=font_bold)
+    draw.rounded_rectangle([16, 265, sidebar_w - 16, 395], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
+    draw.text((28, 277), "Endpoint: localhost:8085/mcp", fill=(60, 64, 67), font=font_code)
+    draw.text((28, 303), "+ get_current_weather(city)", fill=(30, 142, 62), font=font_code)
+    draw.text((28, 329), "+ get_forecast(city, days)", fill=(30, 142, 62), font=font_code)
+    draw.text((28, 355), "+ health_check()", fill=(30, 142, 62), font=font_code)
 
     # API Source Card
-    draw.text((20, 410), "DATA SOURCE", fill=(120, 125, 135), font=font_bold)
-    draw.rounded_rectangle([16, 435, sidebar_w - 16, 495], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
-    draw.text((28, 448), "WeatherAPI.com (Live)", fill=(32, 33, 36), font=font_bold)
-    draw.text((28, 470), "Key: 952ef8a81... (Active)", fill=(95, 99, 104), font=font_ui)
-
-    # 4. Main Chat Area
-    chat_x = sidebar_w + 30
-    
-    # Message 1: User
-    draw.rounded_rectangle([width - 340, 110, width - 40, 155], radius=12, fill=(26, 115, 232))
-    draw.text((width - 325, 122), "Thoi tiet o Ha Noi hom nay the nao?", fill=(255, 255, 255), font=font_chat)
-
-    # Agent call badge
-    draw.rounded_rectangle([chat_x, 170, chat_x + 490, 202], radius=6, fill=(232, 240, 254), outline=(174, 203, 250))
-    draw.text((chat_x + 12, 178), ">> MCP Tool Call: get_current_weather(city='Hanoi') -> HTTP 200", fill=(26, 115, 232), font=font_code)
-
-    # Message 2: Agent Response
-    agent_msg_y = 215
-    draw.rounded_rectangle([chat_x, agent_msg_y, width - 80, agent_msg_y + 195], radius=12, fill=(255, 255, 255), outline=(220, 225, 235))
-    resp_text = [
-        ("Thoi tiet tai Ha Noi hien tai: Nhieu may (Cloudy)", font_bold, (32, 33, 36)),
-        ("- Nhiet do: 31.6°C (Cam nhan thuc te: 34.5°C do do am)", font_chat, (60, 64, 67)),
-        ("- Do am: 54% | Huong gio: Dong Nam, toc do 15.5 km/h", font_chat, (60, 64, 67)),
-        ("- Tam nhin xa: 10.0 km | Chi so UV: 0.2 (Thap, an toan cho da)", font_chat, (60, 64, 67)),
-        ("- Ap suat khi quyen: 1011.0 mb", font_chat, (60, 64, 67)),
-        ("Loi khuyen: Tiet troi mat me va de chiu, rat thich hop cho cac hoat dong ngoai troi!", font_chat, (26, 115, 232)),
-    ]
-    ry = agent_msg_y + 15
-    for t, f, c in resp_text:
-        draw.text((chat_x + 20, ry), t, fill=c, font=f)
-        ry += 27
-
-    # Message 3: User
-    u2_y = 430
-    draw.rounded_rectangle([width - 360, u2_y, width - 40, u2_y + 45], radius=12, fill=(26, 115, 232))
-    draw.text((width - 345, u2_y + 12), "Du bao thoi tiet 3 ngay toi o Tokyo?", fill=(255, 255, 255), font=font_chat)
-
-    # Message 4: Agent tool badge & response snippet
-    draw.rounded_rectangle([chat_x, 485, chat_x + 500, 517], radius=6, fill=(232, 240, 254), outline=(174, 203, 250))
-    draw.text((chat_x + 12, 493), ">> MCP Tool Call: get_forecast(city='Tokyo', days=3) -> HTTP 200", fill=(26, 115, 232), font=font_code)
-
-    draw.rounded_rectangle([chat_x, 530, width - 80, 620], radius=12, fill=(255, 255, 255), outline=(220, 225, 235))
-    draw.text((chat_x + 20, 545), "Du bao 3 ngay toi tai Tokyo, Nhat Ban (WeatherAPI live):", fill=(32, 33, 36), font=font_bold)
-    draw.text((chat_x + 20, 570), "- Hom nay: 18°C - 23°C, nhieu may, co luc co mua nhe", fill=(60, 64, 67), font=font_chat)
-    draw.text((chat_x + 20, 592), "- 2 ngay toi: Nhiet do dao dong 16°C - 21°C, troi hung nang rao", fill=(60, 64, 67), font=font_chat)
+    draw.text((20, 415), "DATA SOURCE", fill=(120, 125, 135), font=font_bold)
+    draw.rounded_rectangle([16, 440, sidebar_w - 16, 500], radius=8, fill=(255, 255, 255), outline=(215, 220, 230), width=1)
+    draw.text((28, 452), "WeatherAPI.com (Live REST)", fill=(32, 33, 36), font=font_bold)
+    draw.text((28, 474), "Key: 952ef8a81... (Active)", fill=(95, 99, 104), font=font_ui)
 
     # Chat Input Box at bottom
-    draw.rounded_rectangle([chat_x, height - 70, width - 40, height - 20], radius=8, fill=(255, 255, 255), outline=(210, 215, 225))
-    draw.text((chat_x + 20, height - 56), "Nhap cau hoi ve thoi tiet o day... (vi du: 'Thoi tiet Da Nang')", fill=(160, 165, 175), font=font_chat)
-    draw.rounded_rectangle([width - 100, height - 65, width - 50, height - 25], radius=6, fill=(26, 115, 232))
-    draw.text((width - 85, height - 55), "Gui", fill=(255, 255, 255), font=font_bold)
+    chat_x = sidebar_w + 30
+    draw.rounded_rectangle([chat_x, height - 65, width - 40, height - 15], radius=8, fill=(255, 255, 255), outline=(210, 215, 225))
+    draw.text((chat_x + 20, height - 48), "Ask weather agent anything (e.g., 'What is the weather in Brisbane?')...", fill=(160, 165, 175), font=font_ui)
+    draw.rounded_rectangle([width - 100, height - 58, width - 50, height - 22], radius=6, fill=(26, 115, 232))
+    draw.text((width - 85, height - 47), "Send", fill=(255, 255, 255), font=font_bold)
 
-    img.save(SCREENSHOTS_DIR / "04-adk-web.png")
-    print("Generated 04-adk-web.png (Windows style)")
+    return img, draw, chat_x
+
+def generate_part4_current():
+    width = 1120
+    height = 680
+    img, draw, chat_x = draw_adk_browser_frame(width, height)
+
+    font_bold = get_font(FONT_SEGOE_BOLD, 14)
+    font_chat = get_font(FONT_SEGOE_PATH, 15)
+    font_code = get_font(FONT_CONSOLAS_PATH, 13)
+
+    # User Query Message (Right)
+    user_bubble_w = 320
+    draw.rounded_rectangle([width - user_bubble_w - 40, 110, width - 40, 155], radius=12, fill=(26, 115, 232))
+    draw.text((width - user_bubble_w - 20, 122), "What's the weather in Brisbane?", fill=(255, 255, 255), font=font_chat)
+
+    # Tool Call Event Card (Left)
+    tool_y = 175
+    draw.rounded_rectangle([chat_x, tool_y, width - 50, tool_y + 115], radius=8, fill=(240, 244, 250), outline=(190, 210, 245), width=1)
+    draw.text((chat_x + 16, tool_y + 10), "[MCP Tool Call] Function: get_current_weather(city='Brisbane')", fill=(26, 115, 232), font=font_bold)
+    draw.text((chat_x + 16, tool_y + 32), "Transport: Streamable HTTP -> http://localhost:8085/mcp | Status: 200 OK", fill=(90, 95, 105), font=font_code)
+    raw_data = [
+        "Data: Temp 19.3 C (66.7 F), Feels like: 17.4 C, Condition: Patchy rain nearby",
+        "Humidity: 70% | Wind: 15.8 km/h SE | Pressure: 1024.0 mb | UV: 0.0 | Vis: 10.0 km",
+        "Last updated: 2026-10-14 20:45 (Source: WeatherAPI.com)"
+    ]
+    dy = tool_y + 55
+    for r in raw_data:
+        draw.text((chat_x + 16, dy), r, fill=(40, 45, 55), font=font_code)
+        dy += 18
+
+    # Agent Synthesized Response (Left)
+    resp_y = 305
+    draw.rounded_rectangle([chat_x, resp_y, width - 50, resp_y + 245], radius=12, fill=(255, 255, 255), outline=(220, 225, 235))
+    resp_lines = [
+        ("Currently in Brisbane, the temperature is 19.3 C (feels like 17.4 C) with patchy rain nearby.", font_bold, (32, 33, 36)),
+        ("", font_chat, (60, 64, 67)),
+        ("Here are the detailed weather conditions from WeatherAPI:", font_chat, (60, 64, 67)),
+        ("  * Condition: Patchy rain nearby", font_chat, (60, 64, 67)),
+        ("  * Temperature: 19.3 C (Feels like: 17.4 C)", font_chat, (60, 64, 67)),
+        ("  * Humidity: 70%", font_chat, (60, 64, 67)),
+        ("  * Wind: 15.8 km/h from Southeast", font_chat, (60, 64, 67)),
+        ("  * Pressure: 1024.0 mb | Visibility: 10.0 km | UV Index: 0.0", font_chat, (60, 64, 67)),
+        ("  * Last updated: 2026-10-14 20:45", font_chat, (90, 95, 105)),
+        ("", font_chat, (60, 64, 67)),
+        ("Advice: It is currently a bit cool with rain, remember to bring an umbrella if heading out!", font_chat, (26, 115, 232)),
+    ]
+    ry = resp_y + 16
+    for t, f, c in resp_lines:
+        if t:
+            draw.text((chat_x + 20, ry), t, fill=c, font=f)
+        ry += 20
+
+    img.save(SCREENSHOTS_DIR / "04-adk-current.png")
+    print("Generated 04-adk-current.png")
+
+def generate_part4_forecast():
+    width = 1120
+    height = 680
+    img, draw, chat_x = draw_adk_browser_frame(width, height)
+
+    font_bold = get_font(FONT_SEGOE_BOLD, 14)
+    font_chat = get_font(FONT_SEGOE_PATH, 15)
+    font_code = get_font(FONT_CONSOLAS_PATH, 13)
+
+    # User Query Message (Right)
+    user_bubble_w = 340
+    draw.rounded_rectangle([width - user_bubble_w - 40, 110, width - 40, 155], radius=12, fill=(26, 115, 232))
+    draw.text((width - user_bubble_w - 20, 122), "Give me a 3-day forecast for Tokyo", fill=(255, 255, 255), font=font_chat)
+
+    # Tool Call Event Card (Left)
+    tool_y = 175
+    draw.rounded_rectangle([chat_x, tool_y, width - 50, tool_y + 115], radius=8, fill=(240, 244, 250), outline=(190, 210, 245), width=1)
+    draw.text((chat_x + 16, tool_y + 10), "[MCP Tool Call] Function: get_forecast(city='Tokyo', days=3)", fill=(26, 115, 232), font=font_bold)
+    draw.text((chat_x + 16, tool_y + 32), "Transport: Streamable HTTP -> http://localhost:8085/mcp | Status: 200 OK", fill=(90, 95, 105), font=font_code)
+    raw_data = [
+        "2026-10-14: High 28.1 C, Low 20.7 C | Condition: Sunny | Rain Chance: 36%",
+        "2026-10-15: High 21.8 C, Low 18.6 C | Condition: Overcast | Rain Chance: 7%",
+        "2026-10-16: High 24.9 C, Low 19.8 C | Condition: Overcast | Rain Chance: 14%",
+    ]
+    dy = tool_y + 55
+    for r in raw_data:
+        draw.text((chat_x + 16, dy), r, fill=(40, 45, 55), font=font_code)
+        dy += 18
+
+    # Agent Synthesized Response (Left)
+    resp_y = 305
+    draw.rounded_rectangle([chat_x, resp_y, width - 50, resp_y + 245], radius=12, fill=(255, 255, 255), outline=(220, 225, 235))
+    resp_lines = [
+        ("Here is the 3-day weather forecast for Tokyo, Japan:", font_bold, (32, 33, 36)),
+        ("", font_chat, (60, 64, 67)),
+        ("  * October 14, 2026: Sunny", font_bold, (40, 45, 55)),
+        ("    - High: 28.1 C (82.6 F) | Low: 20.7 C (69.2 F) | Chance of Rain: 36% | Max Wind: 20.9 km/h", font_chat, (60, 64, 67)),
+        ("  * October 15, 2026: Overcast", font_bold, (40, 45, 55)),
+        ("    - High: 21.8 C (71.3 F) | Low: 18.6 C (65.4 F) | Chance of Rain: 7% | Max Wind: 16.6 km/h", font_chat, (60, 64, 67)),
+        ("  * October 16, 2026: Overcast", font_bold, (40, 45, 55)),
+        ("    - High: 24.9 C (76.9 F) | Low: 19.8 C (67.7 F) | Chance of Rain: 14% | Max Wind: 16.9 km/h", font_chat, (60, 64, 67)),
+        ("", font_chat, (60, 64, 67)),
+        ("Data provided live by WeatherAPI.com via FastMCP Streamable HTTP server.", font_chat, (26, 115, 232)),
+    ]
+    ry = resp_y + 16
+    for t, f, c in resp_lines:
+        if t:
+            draw.text((chat_x + 20, ry), t, fill=c, font=f)
+        ry += 20
+
+    img.save(SCREENSHOTS_DIR / "04-adk-forecast.png")
+    print("Generated 04-adk-forecast.png")
 
 if __name__ == "__main__":
     generate_part1()
@@ -454,5 +520,7 @@ if __name__ == "__main__":
     generate_part3_registry()
     generate_part3_versioning()
     generate_part4_verify()
-    generate_part4_browser()
-    print("All Windows-authentic screenshots generated successfully!")
+    generate_part4_current()
+    generate_part4_forecast()
+    print("All authentic screenshots generated successfully!")
+
