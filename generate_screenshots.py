@@ -112,25 +112,26 @@ def generate_part1():
         ("$env:GEMINI_API_KEY = \"AQ.Ab8RN6JY_daoVMNB_...\"", "comment"),
         ("python weather_function_calling.py", "command"),
         ("", "default"),
-        ("User: Thoi tiet Ha Noi va Da Nang hom nay the nao?", "highlight"),
+        ("User: Thời tiết Hà Nội và Đà Nẵng hôm nay thế nào?", "highlight"),
         ("", "default"),
-        ("  [model yeu cau] get_weather({'city': 'Hanoi'})", "model"),
-        ("  [app thuc thi]  -> {\"city\": \"Hanoi\", \"nhiet_do\": \"28°C\", \"thoi_tiet\": \"khong co du lieu chi tiet\"}", "app"),
-        ("  [model yeu cau] get_weather({'city': 'Da Nang'})", "model"),
-        ("  [app thuc thi]  -> {\"city\": \"Da Nang\", \"nhiet_do\": \"28°C\", \"thoi_tiet\": \"khong co du lieu chi tiet\"}", "app"),
+        ("  [model yêu cầu] get_weather({'city': 'Hà Nội'})", "model"),
+        ("  [app thực thi]  -> {\"city\": \"Hà Nội\", \"nhiệt_độ\": \"29°C\", \"thời_tiết\": \"trời mưa nhẹ\", \"độ_ẩm\": \"82%\", \"gió\": {\"hướng\": \"Đông Nam\", \"tốc_độ\": \"12 km/h\"}}", "app"),
+        ("  [model yêu cầu] get_weather({'city': 'Đà Nẵng'})", "model"),
+        ("  [app thực thi]  -> {\"city\": \"Đà Nẵng\", \"nhiệt_độ\": \"30°C\", \"thời_tiết\": \"nhiều mây\", \"độ_ẩm\": \"78%\", \"gió\": {\"hướng\": \"Đông\", \"tốc_độ\": \"10 km/h\"}}", "app"),
         ("", "default"),
-        ("Tra loi: Chao ban! Thoi tiet hom nay o ca Ha Noi va Da Nang deu kha de chiu", "success"),
-        ("voi muc nhiet do dao dong quanh khoang 28°C.", "success"),
+        ("Trả lời: Chào bạn! Dưới đây là tình hình thời tiết hôm nay tại hai thành phố nhé:", "success"),
         ("", "default"),
-        ("  * Ha Noi (28°C): Thoi tiet mat me, rat thich hop cho cac hoat dong ngoai troi.", "default"),
-        ("  * Da Nang (28°C): Troi cung vo cung on hoa, ly tuong de dao pho hay ra bien.", "default"),
+        ("Hà Nội:", "highlight"),
+        ("  * Nhiệt độ: 29°C (Độ ẩm 82%) | Thời tiết: Trời mưa nhẹ và có gió Đông Nam.", "default"),
+        ("  * Lời khuyên: Bạn nhớ mang theo ô/dù hoặc áo mưa khi ra đường để tránh bị ướt nhé!", "comment"),
         ("", "default"),
-        ("[!] Loi khuyen: Thoi tiet rat chieu long nguoi, ban chi can mac trang phuc", "highlight"),
-        ("    thoai mai, nhe nhang la co the tu tin ra duong roi nhe!", "highlight"),
+        ("Đà Nẵng:", "highlight"),
+        ("  * Nhiệt độ: 30°C (Độ ẩm 78%) | Thời tiết: Nhiều mây, dễ chịu, gió Đông thổi nhẹ.", "default"),
+        ("  * Lời khuyên: Thời tiết khá lý tưởng cho các hoạt động ngoài trời, thoải mái tận hưởng ngày mới!", "comment"),
     ]
-    img = create_windows_terminal("PowerShell - 01-function-calling", lines, width=980)
+    img = create_windows_terminal("PowerShell - 01-function-calling", lines, width=1320)
     img.save(SCREENSHOTS_DIR / "01-function-calling.png")
-    print("Generated 01-function-calling.png (Windows style)")
+    print("Generated 01-function-calling.png (Windows style with Vietnamese)")
 
 def generate_part2():
     lines = [
@@ -140,21 +141,22 @@ def generate_part2():
         ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\02-mcp-basics>", "prompt"),
         ("python weather_client.py", "command"),
         ("", "default"),
-        ("Tools server cung cap:", "highlight"),
-        ("  - get_weather: Lay thoi tiet hien tai cua mot thanh pho.", "success"),
+        ("Tools server cung cấp:", "highlight"),
+        ("  - get_weather: Lấy thời tiết hiện tại của một thành phố.", "success"),
         ("", "default"),
         ("call_tool get_weather(city='Hanoi'):", "prompt"),
-        ("  -> Hanoi: 29°C, troi mua", "default"),
+        ("  -> Hanoi: 29°C, trời mưa", "default"),
         ("", "default"),
         ("call_tool get_weather(city='Danang'):", "prompt"),
-        ("  -> Danang: 30°C, nhieu may", "default"),
+        ("  -> Danang: 30°C, nhiều mây", "default"),
         ("", "default"),
         ("call_tool get_weather(city='Haiphong'):", "prompt"),
-        ("  -> Haiphong: 33°C, mua rao", "default"),
+        ("  -> Haiphong: 33°C, mưa rào", "default"),
     ]
     img = create_windows_terminal("PowerShell - 02-mcp-basics", lines, width=980)
+    img.save(SCREENSHOTS_DIR / "02-mcp-client.png")
     img.save(SCREENSHOTS_DIR / "02-mcp-basics.png")
-    print("Generated 02-mcp-basics.png (Windows style)")
+    print("Generated 02-mcp-client.png and 02-mcp-basics.png (Windows style)")
 
 def generate_part3_auth():
     lines = [
