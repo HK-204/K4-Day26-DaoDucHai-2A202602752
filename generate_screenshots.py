@@ -158,31 +158,52 @@ def generate_part2():
     img.save(SCREENSHOTS_DIR / "02-mcp-basics.png")
     print("Generated 02-mcp-client.png and 02-mcp-basics.png (Windows style)")
 
-def generate_part3_auth():
+def generate_part3_auth_ok():
     lines = [
         ("Windows PowerShell", "comment"),
         ("Copyright (C) Microsoft Corporation. All rights reserved.", "comment"),
         ("", "default"),
-        ("# -- Terminal 1: Khoi dong MCP Server qua Streamable HTTP ------------------", "comment"),
+        ("# -- Terminal 1: Khoi dong auth_server.py tren Streamable HTTP (port 8000) --", "comment"),
         ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\03-production> python auth_server.py", "command"),
-        ("INFO:     Started server process [7812]", "comment"),
+        ("INFO:     Started server process [3204]", "comment"),
         ("INFO:     Waiting for application startup.", "comment"),
         ("INFO:     StreamableHTTP session manager started", "app"),
-        ("INFO:     Application startup complete.", "comment"),
         ("INFO:     Uvicorn running on http://0.0.0.0:8000/mcp (Press CTRL+C to quit)", "success"),
         ("", "default"),
-        ("# -- Terminal 2: MCP Client gui Bearer Token xac thuc ---------------------", "comment"),
+        ("# -- Terminal 2: Chay client voi Bearer Token hop le (dev-token-abc123) ------", "comment"),
         ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\03-production> python auth_client.py", "command"),
-        ("Tools (co auth):", "highlight"),
-        ("  - get_weather: Lay thoi tiet hien tai cua mot thanh pho.", "success"),
+        ("Tools (có auth):", "highlight"),
+        ("  - get_weather: Lấy thời tiết hiện tại của một thành phố.", "success"),
         ("", "default"),
-        ("Ket qua: Hanoi: 29°C, troi mua", "app"),
-        ("", "default"),
-        ("[AUTH OK] dev-token-abc123 -> dev-user [Scopes: weather:read] -> HTTP 200", "success"),
+        ("Kết quả: Hanoi: 29°C, trời mưa", "app"),
     ]
-    img = create_windows_terminal("PowerShell - 03-production: Auth", lines, width=980)
+    img = create_windows_terminal("PowerShell - 03a: Auth OK", lines, width=980)
+    img.save(SCREENSHOTS_DIR / "03a-auth-ok.png")
     img.save(SCREENSHOTS_DIR / "03-production-auth.png")
-    print("Generated 03-production-auth.png (Windows style)")
+    print("Generated 03a-auth-ok.png")
+
+def generate_part3_auth_fail():
+    lines = [
+        ("Windows PowerShell", "comment"),
+        ("Copyright (C) Microsoft Corporation. All rights reserved.", "comment"),
+        ("", "default"),
+        ("# -- Terminal 2: Chay client voi Token SAI (MCP_AUTH_TOKEN=wrong-token) ----", "comment"),
+        ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\03-production> $env:MCP_AUTH_TOKEN=\"wrong-token\"", "prompt"),
+        ("PS C:\\labtrack3\\vinlab26\\K4-Day26-DaoDucHai-2A202602752\\03-production> python auth_client.py", "command"),
+        ("Traceback (most recent call last):", "warn"),
+        ("  File \"auth_client.py\", line 40, in main", "warn"),
+        ("    await session.initialize()", "warn"),
+        ("  File \"mcp\\client\\session.py\", line 654, in initialize", "warn"),
+        ("    result = await self.send_request(method, data)", "warn"),
+        ("mcp.shared.exceptions.MCPError: Server returned an error response", "warn"),
+        ("", "default"),
+        ("# -- Terminal 1: Log server tu choi request vi thieu/sai quyen ------------", "comment"),
+        ("INFO:     127.0.0.1:55582 - \"POST /mcp HTTP/1.1\" 401 Unauthorized", "warn"),
+        ("INFO:     Authentication failed: Invalid Bearer token 'wrong-token'", "warn"),
+    ]
+    img = create_windows_terminal("PowerShell - 03a: Auth Fail (401 Unauthorized)", lines, width=980)
+    img.save(SCREENSHOTS_DIR / "03a-auth-fail.png")
+    print("Generated 03a-auth-fail.png")
 
 def generate_part3_registry():
     lines = [
@@ -193,35 +214,33 @@ def generate_part3_registry():
         ("python registry_client.py", "command"),
         ("", "default"),
         ("=== Tool Registry ===", "highlight"),
-        ("", "default"),
         ("  get_weather v1.0.0", "app"),
-        ("    Lay thoi tiet hien tai cua mot thanh pho", "default"),
-        ("    tags: ['weather', 'current', 'vietnam']  ->  server: weather", "comment"),
+        ("    Lấy thời tiết hiện tại của một thành phố", "default"),
+        ("    tags: ['weather', 'current', 'vietnam']  →  server: weather", "comment"),
         ("  get_weather_v2 v2.0.0", "app"),
-        ("    Lay thoi tiet chi tiet -- JSON, ho tro forecast va don vi do", "default"),
-        ("    tags: ['weather', 'forecast', 'detailed', 'vietnam']  ->  server: weather-v2", "comment"),
+        ("    Lấy thời tiết chi tiết — JSON, hỗ trợ forecast và đơn vị đo", "default"),
+        ("    tags: ['weather', 'forecast', 'detailed', 'vietnam']  →  server: weather-v2", "comment"),
         ("  send_email v1.0.0", "app"),
-        ("    Gui email toi mot hoac nhieu nguoi nhan", "default"),
-        ("    tags: ['email', 'notification', 'communication']  ->  server: email-service", "comment"),
+        ("    tags: ['email', 'notification']  →  server: email-service", "comment"),
         ("  query_db v1.2.0", "app"),
-        ("    Chay truy van SQL tren database noi bo", "default"),
-        ("    tags: ['database', 'sql', 'query', 'analytics']  ->  server: db-gateway", "comment"),
+        ("    tags: ['database', 'sql', 'query']  →  server: db-gateway", "comment"),
         ("", "default"),
-        ("--- Agent can tool co tag 'weather' ---", "highlight"),
-        ("Tim thay 2 tool(s):", "default"),
-        ("  * get_weather v1.0.0 (server: weather)", "comment"),
-        ("  * get_weather_v2 v2.0.0 (server: weather-v2)", "comment"),
+        ("--- Agent cần tool có tag \"weather\" ---", "highlight"),
+        ("Tìm thấy 2 tool(s):", "default"),
+        ("  • get_weather v1.0.0 (server: weather)", "comment"),
+        ("  • get_weather_v2 v2.0.0 (server: weather-v2)", "comment"),
         ("", "default"),
         ("Best match: get_weather_v2 v2.0.0", "success"),
-        ("Ket noi toi server [weather-v2]...", "prompt"),
-        ("Ket qua: {\"api_version\": \"2.0\", \"city\": \"Hanoi\", \"temp\": 29, \"units\": \"celsius\", \"condition\": \"troi mua\", \"humidity\": 82}", "app"),
+        ("Kết nối tới server [weather-v2]...", "prompt"),
+        ("Kết quả: {\"api_version\": \"2.0\", \"city\": \"Hanoi\", \"temp\": 29, \"units\": \"celsius\", \"condition\": \"trời mưa\", \"humidity\": 82}", "app"),
         ("", "default"),
-        ("--- Agent tim tool co keyword 'forecast' ---", "highlight"),
-        ("  * get_weather_v2: Lay thoi tiet chi tiet -- JSON, ho tro forecast va don vi do", "success"),
+        ("--- Agent tìm tool có keyword \"forecast\" ---", "highlight"),
+        ("  • get_weather_v2: Lấy thời tiết chi tiết — JSON, hỗ trợ forecast và đơn vị đo", "success"),
     ]
-    img = create_windows_terminal("PowerShell - 03-production: Registry", lines, width=980)
+    img = create_windows_terminal("PowerShell - 03b: Tool Registry", lines, width=1120)
+    img.save(SCREENSHOTS_DIR / "03b-registry.png")
     img.save(SCREENSHOTS_DIR / "03-production-registry.png")
-    print("Generated 03-production-registry.png (Windows style)")
+    print("Generated 03b-registry.png")
 
 def generate_part3_versioning():
     lines = [
@@ -233,14 +252,14 @@ def generate_part3_versioning():
         ("", "default"),
         ("Server: weather-v2 v2.0.0", "highlight"),
         ("Deprecated tools: ['get_weather']", "warn"),
-        ("Migration: Chuyen tu get_weather sang get_weather_v2. Tham so 'city' giu nguyen, them include_forecast va units.", "comment"),
+        ("Migration: Chuyển từ get_weather sang get_weather_v2. Tham số 'city' giữ nguyên, thêm include_forecast và units.", "comment"),
         ("", "default"),
         ("Tools:", "highlight"),
-        ("  - get_weather: [v1] Lay thoi tiet hien tai -- tra chuoi don gian. Deprecated, dung get_weather_v2.", "warn"),
-        ("  - get_weather_v2: [v2] Lay thoi tiet chi tiet -- JSON, ho tro forecast va don vi do.", "success"),
+        ("  - get_weather: [v1] Lấy thời tiết hiện tại — trả chuỗi đơn giản. Deprecated, dùng get_weather_v2.", "warn"),
+        ("  - get_weather_v2: [v2] Lấy thời tiết chi tiết — JSON, hỗ trợ forecast và đơn vị đo.", "success"),
         ("", "default"),
         ("[v1] get_weather('Hanoi'):", "prompt"),
-        ("  Hanoi: 29°C, troi mua", "default"),
+        ("  Hanoi: 29°C, trời mưa", "default"),
         ("", "default"),
         ("[v2] get_weather_v2('Hanoi', forecast=True):", "prompt"),
         ("  {", "app"),
@@ -248,18 +267,19 @@ def generate_part3_versioning():
         ("    \"city\": \"Hanoi\",", "app"),
         ("    \"temp\": 29,", "app"),
         ("    \"units\": \"celsius\",", "app"),
-        ("    \"condition\": \"troi mua\",", "app"),
+        ("    \"condition\": \"trời mưa\",", "app"),
         ("    \"humidity\": 82,", "app"),
         ("    \"wind_speed_kmh\": 12,", "app"),
         ("    \"forecast\": [", "app"),
-        ("      {\"day\": \"tomorrow\", \"temp\": 27, \"condition\": \"mua nhe\"},", "app"),
-        ("      {\"day\": \"day_after\", \"temp\": 31, \"condition\": \"nang\"}", "app"),
+        ("      {\"day\": \"tomorrow\", \"temp\": 27, \"condition\": \"mưa nhẹ\"},", "app"),
+        ("      {\"day\": \"day_after\", \"temp\": 31, \"condition\": \"nắng\"}", "app"),
         ("    ]", "app"),
         ("  }", "app"),
     ]
-    img = create_windows_terminal("PowerShell - 03-production: Versioning", lines, width=980)
+    img = create_windows_terminal("PowerShell - 03c: Versioning", lines, width=980)
+    img.save(SCREENSHOTS_DIR / "03c-versioning.png")
     img.save(SCREENSHOTS_DIR / "03-production-versioning.png")
-    print("Generated 03-production-versioning.png (Windows style)")
+    print("Generated 03c-versioning.png")
 
 def generate_part4_verify():
     lines = [
@@ -429,7 +449,8 @@ def generate_part4_browser():
 if __name__ == "__main__":
     generate_part1()
     generate_part2()
-    generate_part3_auth()
+    generate_part3_auth_ok()
+    generate_part3_auth_fail()
     generate_part3_registry()
     generate_part3_versioning()
     generate_part4_verify()
